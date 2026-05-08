@@ -1,0 +1,5 @@
+@include('layouts.header')
+<div class="row">
+
+</div>
+@include('layouts.footer')
