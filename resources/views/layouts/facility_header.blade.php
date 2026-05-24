@@ -8,7 +8,7 @@
 		    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 		    <link rel="icon" type="image/x-icon" href="../images/favicon.ico" />
 		    <!-- Font Awesome -->
-		    <link rel="stylesheet" href="{{ asset(/admin_lte/plugins/fontawesome-free/css/all.min.css') }}">
+		    <link rel="stylesheet" href="{{ asset('/admin_lte/plugins/fontawesome-free/css/all.min.css') }}">
 		    <!-- Ionicons -->
 		    <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
 		    <!-- Tempusdominus Bbootstrap 4 -->
@@ -32,10 +32,10 @@
 		    <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
 		    <link rel="stylesheet" href="/admin_lte/plugins/datatables-bs4/css/dataTables.bootstrap4.css">
 		    <!-- <link rel='stylesheet' href='https://cdn.datatables.net/responsive/1.0.4/css/dataTables.responsive.css'> -->
-	        <link rel="stylesheet" href="{{ asset('/admin_lte/style.css') }}">
-            <link rel="stylesheet" href="{{ asset('/admin_lte/datatables_responsive.css') }}">
-        <script src="{{ asset('/admin_lte/plugins/jquery/jquery.min.js') }}"></script>
-    <script src="{{ asset('/admin_lte/plugins/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
+	    <link rel="stylesheet" href="{{ asset('/admin_lte/style.css') }}">
+    <link rel="stylesheet" href="{{ asset('/admin_lte/datatables_responsive.css') }}">
+<script src="{{ asset('/admin_lte/plugins/jquery/jquery.min.js') }}"></script>
+<script src="{{ asset('/admin_lte/plugins/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
 </head>
 <body class="hold-transition sidebar-mini layout-fixed" style="font-size: 15px;">
 <div class="wrapper">
@@ -75,14 +75,14 @@
          aria-labelledby="orderBell">
 
         <span class="dropdown-item dropdown-header text-left">
-            Pending Orders
+            New Documents
         </span>
 
         <div class="dropdown-divider"></div>
 
         <div id="orderList">
             <span class="dropdown-item text-muted text-center">
-                No unpaid orders 🎉
+            Untouch Documents 🎉
             </span>
         </div>
     </div>
@@ -99,12 +99,12 @@
 </nav>
 <!-- /.navbar -->
 <audio id="orderSound">
-    <source src="{{ asset('../public/audio/shop-notification.mp3') }}" type="audio/mpeg">
+    <source src="{{ asset('../audio/shop-notification.mp3') }}" type="audio/mpeg">
 </audio>
 
-<script src="{{ asset('../public/admin_lte/plugins/jquery/jquery.min.js') }}"></script>
+<script src="{{ asset('../admin_lte/plugins/jquery/jquery.min.js') }}"></script>
 
-<script src="{{ asset('../public/admin_lte/plugins/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
+<script src="{{ asset('../admin_lte/plugins/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
 
 
 
@@ -132,14 +132,16 @@ $(function () {
                            class="dropdown-item order-item d-flex align-items-center"
                            data-id="${order.order_id}">
 
-                            <img src="../public/images/default_avatar.jpg"
+                            <img src="/images/default_avatar.jpg"
                                  class="img-circle elevation-2 mr-3"
                                  alt="User Image"
                                  style="width:40px;height:40px;">
 
                             <div class="flex-grow-1">
                                 <strong>${order.firstname ?? 'Unknown'} ${order.lastname ?? ''}</strong><br>
-                                <small class="text-muted">${order.mobile_number ?? ''}</small>
+                                <small class="text-muted">${order.company ?? ''}</small>
+                                <small class="text-muted">${order.item_name ?? ''}</small>
+
                             </div>
                         </a>
                         <div class="dropdown-divider"></div>

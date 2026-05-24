@@ -35,7 +35,7 @@
 
                     <div class="form-group">
                        <div class="floating-input">
-                        <input type="text" name="password" placeholder=" " value="{{ old('password') }}">
+                        <input type="password" name="password" placeholder=" " value="{{ old('password') }}">
                             <label>Password</label>
                         <span class="text-danger">@error('password') {{ $message }} @enderror</span>
                     </div>

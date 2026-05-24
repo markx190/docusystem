@@ -86,7 +86,7 @@ class CustomAuthController extends Controller
     
         $user = new User();
         $user->account_id = mt_rand(100000, 999999);
-        $user->account_type = 'Host';
+        $user->account_type = 'Staff';
         $user->firstname = $request->firstname;
         $user->middlename = $request->middlename;
         $user->lastname = $request->lastname;
@@ -176,7 +176,8 @@ class CustomAuthController extends Controller
         return redirect()->route('store.index'); // Front page for Customers
     }
 
-    // Default: redirect to dashboard for other account types
+        // Default: redirect to dashboard for other account types
+        // return redirect()->route('dashboard');
         return redirect()->route('dashboard');
     }
 

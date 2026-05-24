@@ -139,11 +139,9 @@ class ManageItemsController extends Controller
     
     public function updateUnitForm(Request $request)
     {
-        try {
-            return $this->manageItem->updateUnitForm($request);
-        } catch (Exception $e){
-            return $e->getMessage();
-        }
+        
+        return $this->manageItem->updateUnitForm($request);
+       
     }
 
     public function updateItem(Request $request)

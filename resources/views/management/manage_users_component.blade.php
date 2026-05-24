@@ -1,4 +1,4 @@
-@include('layouts.header')
+@include('layouts.facility_header')
 <!-- Main Sidebar Container -->
 <aside class="main-sidebar elevation-4" style="background-color: #FFFFFF;">
     <!-- Brand Logo -->
@@ -12,60 +12,49 @@
         	<div class="user-panel mt-3 pb-3 mb-3 d-flex">
             	<div class="image">
 				@if(isset($user->avatar) && !empty($user->avatar))
-				<img src="/uploads/avatars/{{ $user->avatar }}" class="img-circle elevation-2" 
+				<img src="../uploads/avatars/{{ $user->avatar }}" class="img-circle elevation-2" 
 				style="width: 52px; height: 50px;" alt="User Image">
 				@else
-				<img src="/images/default_avatar.jpg" class="img-circle elevation-2" 
+				<img src="../images/default_avatar.jpg" class="img-circle elevation-2" 
 				style="width: 52px; height: 50px;" alt="User Image">
 				@endif
 			<h5 style="margin-top: 10px; font-size: 16px;">Hi, {{ $user->firstname }}</h5>
 		</div>
     </div>
 	<hr style="margin-top: -25px;">
-
     <!-- Sidebar Menu -->
     <nav class="mt-2">
         <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
           	<!-- Add icons to the links using the .nav-icon class
-            	with font-awesome or any other icon font library -->
-          		<li class="nav-item has-treeview menu-open">
-            		<a href="/manage_items" class="nav-link active">
-              			<i class="nav-icon fas fa-tachometer-alt"></i>
-              		<p>Preferences <i class="right fas fa-angle-left"></i></p>
+            with font-awesome or any other icon font library -->
+          	<li class="nav-item has-treeview menu-open">
+            	<a href="/dashboard" class="nav-link active">
+              		<i class="nav-icon fas fa-tachometer-alt"></i>
+              		<p>Dashboard<i class="right fas fa-angle-left"></i></p>
             	</a>
         		<ul class="nav nav-treeview">
-        		    @if($user->account_type == 'Administrator')
-        		    <li class="nav-item">
-                		<a href="/dashboard" class="nav-link">
-                  			<i class="fa fa-desktop nav-icon"></i>
-                  			<p>Dashboard</p>
-                		</a>
-            		</li>
-					@endif
-					<li class="nav-item">
-                		<a href="/manage_items" class="nav-link">
+                @if($user->account_type == 'Administrator')
+                    <li class="nav-item">
+                		<a style="cursor: pointer;" href="/manage_items" class="nav-link">
                   			<i class="fa fa-folder nav-icon"></i>
                   			<p>Files</p>
                 		</a>
             		</li>
-            		
-					@if($user->account_type == 'Administrator')
-        		    <li class="nav-item">
-                		<a href="/manage_users" class="nav-link">
+            		<li class="nav-item">
+                		<a style="cursor: pointer;" href="/manage_users" class="nav-link">
                   			<i class="fa fa-users nav-icon"></i>
                   			<p>Users</p>
                 		</a>
             		</li>
-					@endif
-					
-					@if(session()->get('GoogleName') == 'Admin')
+                @endif
+					<!-- @if(session()->get('GoogleName') == 'Admin')
 					<li class="nav-item">
                 	<a style="cursor: pointer;" onclick="importExportData(event)" class="nav-link">
                   		<i class="fa fa-upload nav-icon"></i>
                   			<p>Upload Data</p>
                 		</a>
             		</li>
-					@endif 
+					@endif -->
         		</ul>
         	</li>
           	<li class="nav-item">
@@ -85,7 +74,7 @@
 </div>
 <!-- /.sidebar -->
 </aside>
-@include('management.items_table')
+@include('management.users_table')
 @include('layouts.footer')
 
 

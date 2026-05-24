@@ -4,7 +4,8 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\GoogleAuthController;
 use App\Http\Controllers\CustomAuthController;
 use App\Http\Controllers\Cart\CartController;
-use App\Http\Controllers\Dashboard\UpdateUserController;
+use App\Http\Controllers\dashboard\UpdateUserController;
+use App\Http\Controllers\Main\TopicPageController;
 use App\Http\Controllers\dashboard\DashboardController;
 use App\Http\Controllers\dashboard\ManageItemsController;
 use App\Http\Controllers\dashboard\ManageBzTransactionsController;
@@ -45,14 +46,13 @@ Route::get('/view_account', [CustomAuthController::class,'viewAccount'])->name('
 Route::put('/orders/{id}/cancel', [CartController::class, 'cancelOrder'])->name('orders.cancel');
 
 // Profile
-    Route::get('/edit_account', 
-        [ManageProfileController::class, 'editAccount']
-    )->name('edit_account')->middleware('alreadyLoggedIn');
+Route::get('/edit_account', 
+    [ManageProfileController::class, 'editAccount']
+)->name('edit_account')->middleware('alreadyLoggedIn');
 
-    Route::post('/update_account', 
-        [ManageProfileController::class, 'updateAccount']
-    )->name('update_account');
-
+Route::post('/update_account', 
+    [ManageProfileController::class, 'updateAccount']
+)->name('update_account');
 
 // Update User Avatar
 Route::post('/update_user_avatar', [UpdateUserController::class, 'updateUser'])->name('updateUser');
@@ -69,9 +69,14 @@ Route::get('/dashboard', 'App\Http\Controllers\dashboard\DashboardController@das
 Route::get('auth/google', [GoogleAuthController::class, 'redirect'])->name('google-auth');
 Route::get('auth/google/call-back', [GoogleAuthController::class, 'callbackGoogle']);
 
-// Manage Applicants
-Route::get('/manage_applicants', 'App\Http\Controllers\Dashboard\ManageApplicantsController@index');
-Route::get('/applicants_datatables', 'App\Http\Controllers\Dashboard\ManageApplicantsController@applicantsDataTable');
+// Create Topic page
+Route::get('/topics', 'App\Http\Controllers\Main\TopicPageController@index')->middleware('isLoggedIn')->name('topics');
+Route::post('/create_topic', 'App\Http\Controllers\Main\TopicPageController@createTopic')->middleware('isLoggedIn')->name('create_topic');
+Route::post('/like_topic', 'App\Http\Controllers\Main\TopicPageController@likeTopic')->middleware('isLoggedIn')->name('like_topic');
+// Edit Topic
+Route::post('/update_topic',
+    [TopicPageController::class, 'updateTopic']
+)->name('update_topic');
 
 // Rivers
 // Route::get('/', 'App\Http\Controllers\Main\MainPageController@index');
@@ -103,10 +108,6 @@ Route::post('/update_cart', 'App\Http\Controllers\Cart\CartController@updateCart
 Route::post('/checkout', 'App\Http\Controllers\Cart\CartController@checkout')->name('checkout');
 Route::post('/confirm_order', 'App\Http\Controllers\Cart\CartController@confirmOrder')->name('confirm_order');
 
-// Place Order
-Route::get('/place_order', 'App\Http\Controllers\Cart\CartController@placeOrder')->name('place_order');
-Route::get('/order_completed/{oId}', 'App\Http\Controllers\Cart\CartController@orderCompleted')->name('order_completed');
-
 // Page Expired
 Route::get('/page_expired', 'App\Http\Controllers\Cart\CartController@pageExpired')->name('page_expired');
 
@@ -134,6 +135,12 @@ Route::post('/update_unit/{itemIdNo}', 'App\Http\Controllers\dashboard\ManageIte
 Route::get('/add_image_form/{itemIdNo}', 'App\Http\Controllers\dashboard\ManageItemsController@addImageForm');
 Route::post('/add_item_image', 'App\Http\Controllers\dashboard\ManageItemsController@addItemImage')->name('add_item_image');
 Route::post('/delete_item_image', 'App\Http\Controllers\dashboard\ManageItemsController@deleteItemImage')->name('delete_item_image');
+
+// Manage Users
+Route::get('/manage_users', 'App\Http\Controllers\dashboard\ManageUsersController@index')->middleware('isLoggedIn')->name('manage_users');
+Route::get('/users_datatables', 'App\Http\Controllers\dashboard\ManageUsersController@usersDataTable')->name('users.datatables');
+Route::get('/update_user_form/{uIdNo}', 'App\Http\Controllers\dashboard\ManageUsersController@updateUserForm')->name('update_user_form');
+Route::post('/update_user/{uIdNo}', 'App\Http\Controllers\dashboard\ManageUsersController@updateUser')->name('update_users');
 
 // Add Faciity
 Route::get('/add_facility_form/{itemIdNo}', 'App\Http\Controllers\dashboard\ManageItemsController@addFacilityForm');

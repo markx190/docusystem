@@ -5,7 +5,7 @@
                 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
                 <meta name="description" content="" />
                 <meta name="author" content="" />
-                <title>whilers</title>
+                <title>Docusystem</title>
                 <!-- Favicon-->
                 <meta name="viewport" content="width=device-width, initial-scale=1">
                 <link href="online/css/styles.css" rel="stylesheet" />
@@ -19,7 +19,7 @@
     <div class="container">
         <!-- Logo -->
         <a class="navbar-brand whilers-logo" href="/">
-            <span><i class="fa fa-cubes" style="color: #ffeb3b;"></i> whilers</span>
+            <span><i class="fa fa-folder" style="color: #ffeb3b;"></i> Docusystem</span>
         </a>
         <!-- Mobile toggle -->
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse"

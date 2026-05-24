@@ -22,7 +22,6 @@
 <div class="card-body docs-body">
     <div class="row">
     @if($user->account_type == 'Administrator')
-
     <div class="col-lg-3 col-6">
         <!-- small box -->
             <div class="small-box bg-success">
@@ -42,7 +41,7 @@
             <div class="small-box bg-primary">
                 <div class="inner">
                     <h3>{{ $itemsCount }}</h3>
-                        <p>Items</p>
+                        <p>Files</p>
                         </div>
                         <div class="icon">
                         <i class="ion ion-stats-bars"></i>
@@ -130,7 +129,7 @@
     <div class="col-lg-6 col-12">
         <div class="card">
             <div class="card-header">
-                <i class="fas fa-chart-bar"></i> Items 
+                <i class="fas fa-chart-bar"></i> Files 
             </div>
             <div class="card-body">
                 <canvas id="itemsBarChart" style="height:250px;"></canvas>
@@ -139,8 +138,6 @@
     </div>
 </div>
 
-
-                            
                         </div>
                     </div>
                 </div>
@@ -177,10 +174,10 @@
     }
 </style>
 <!-- <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script> -->
-<script src="/admin_lte/plugins/datatables/jquery.dataTables.js"></script>
-<script src="/admin_lte/plugins/jquery/jquery.min.js"></script>
+<script src="public/admin_lte/plugins/datatables/jquery.dataTables.js"></script>
+<script src="public/admin_lte/plugins/jquery/jquery.min.js"></script>
 <!-- jQuery UI 1.11.4 -->
-<script src="/admin_lte/plugins/jquery-ui/jquery-ui.min.js"></script>
+<script src="public/admin_lte/plugins/jquery-ui/jquery-ui.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
 <script>
@@ -225,7 +222,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 @endforeach
             ],
             datasets: [{
-                label: 'Orders per Item',
+                label: 'Files processed',
                 data: [
                     @foreach($vItems as $item)
                         {{ $item->count }},

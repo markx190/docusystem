@@ -3,7 +3,7 @@
 <aside class="main-sidebar elevation-4" style="background-color: #FFFFFF;">
     <!-- Brand Logo -->
 		<a href="https://whilers.com" style="text-decoration: none; color: red;" class="brand-link">
-        	<center>Whilers.com</center>
+        	<center>Docusystem</center>
 		</a>
     <!-- Sidebar -->
 <hr style="margin-top: -8px;">

@@ -1,7 +1,7 @@
 <!-- /.content-wrapper -->
 <div class="container">
 <footer class="reg-footer">
-    <strong>Copyright &copy; 2023 <a href="http://buzytown.com">buzytown.com</a>.</strong>
+    <strong>Copyright &copy; 2023 <a href="/">Docusystem</a>.</strong>
         All rights reserved.
             <div class="float-right d-none d-sm-inline-block">
        

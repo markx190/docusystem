@@ -2,7 +2,7 @@
 <!-- Main Sidebar Container -->
 <aside class="main-sidebar elevation-4" style="background-color: #FFFFFF;">
     <!-- Brand Logo -->
-		<a href="https://buzytown.com" style="text-decoration: none; color: red;" class="brand-link">
+		<a href="#" style="text-decoration: none; color: red; font-weight: bold;" class="brand-link">
         	<center>Docusystem</center>
 		</a>
     <!-- Sidebar -->
@@ -18,7 +18,7 @@
 				<img src="/images/default_avatar.jpg" class="img-circle elevation-2" 
 				style="width: 52px; height: 50px;" alt="User Image">
 				@endif
-			<h5 style="margin-top: 10px; font-size: 12px;">Hi, {{ $user->firstname }}</h5>
+			<h5 style="margin-top: 10px; font-size: 16px;">Hi, {{ $user->firstname }}</h5>
 		</div>
     </div>
 	<hr style="margin-top: -25px;">
@@ -33,18 +33,28 @@
               		<p>Preferences<i class="right fas fa-angle-left"></i></p>
             	</a>
         		<ul class="nav nav-treeview">
+					@if($user->account_type == 'Administrator')
         		    <li class="nav-item">
-                		<a href="/manage_items" class="nav-link">
+                		<a href="/dashboard" class="nav-link">
                   			<i class="fa fa-desktop nav-icon"></i>
                   			<p>Dashboard</p>
                 		</a>
             		</li>
+					@endif
             		<li class="nav-item">
                 		<a href="/manage_items" class="nav-link">
-                  			<i class="fa fa-cubes nav-icon"></i>
-                  			<p>List of Items</p>
+                  			<i class="fa fa-folder nav-icon"></i>
+                  			<p>List of Files</p>
                 		</a>
             		</li>
+					@if($user->account_type == 'Administrator')
+        		    <li class="nav-item">
+                		<a href="/manage_users" class="nav-link">
+                  			<i class="fa fa-users nav-icon"></i>
+                  			<p>Users</p>
+                		</a>
+            		</li>
+					@endif
 					<!-- @if(session()->get('GoogleName') == 'Admin')
 					<li class="nav-item">
                 	<a style="cursor: pointer;" onclick="importExportData(event)" class="nav-link">

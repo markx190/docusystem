@@ -22,39 +22,24 @@
 		</div>
     </div>
 	<hr style="margin-top: -25px;">
-
-    <!-- Sidebar Menu -->
-    <nav class="mt-2">
-        <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
-          	<!-- Add icons to the links using the .nav-icon class
-            with font-awesome or any other icon font library -->
-          	<li class="nav-item has-treeview menu-open">
-            	<a href="/dashboard" class="nav-link active">
-              		<i class="nav-icon fas fa-tachometer-alt"></i>
-              		<p>Preferences <i class="right fas fa-angle-left"></i></p>
-            	</a>
+        <!-- Sidebar Menu -->
+            <nav class="mt-2">
+                <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+          	        <!-- Add icons to the links using the .nav-icon class
+                        with font-awesome or any other icon font library -->
+          	            <li class="nav-item has-treeview menu-open">
+            	            <a href="/manage_items" class="nav-link active">
+              		        <i class="nav-icon fas fa-tachometer-alt"></i>
+              		        <p>List of Users <i class="right fas fa-angle-left"></i></p>
+            	        </a>
         		<ul class="nav nav-treeview">
-					@if($user->account_type == 'Administrator')
-					<li class="nav-item">
-                		<a style="cursor: pointer;" href="/manage_users" class="nav-link">
-                  			<i class="fa fa-users nav-icon"></i>
-                  			<p>Users</p>
-                		</a>
-            		</li>
-					@endif
-            		<li class="nav-item">
-                		<a style="cursor: pointer;" href="/manage_items" class="nav-link">
-                  			<i class="fa fa-folder nav-icon"></i>
-                  			<p>Files</p>
-                		</a>
-            		</li>
 					<!-- @if(session()->get('GoogleName') == 'Admin')
-					<li class="nav-item">
-                	<a style="cursor: pointer;" onclick="importExportData(event)" class="nav-link">
-                  		<i class="fa fa-upload nav-icon"></i>
-                  			<p>Upload Data</p>
-                		</a>
-            		</li>
+					    <li class="nav-item">
+                	        <a style="cursor: pointer;" onclick="importExportData(event)" class="nav-link">
+                  		        <i class="fa fa-upload nav-icon"></i>
+                  			    <p>Upload Data</p>
+                		    </a>
+            		    </li>
 					@endif -->
         		</ul>
         	</li>
@@ -67,7 +52,7 @@
                 </a>
 				<form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
 					@csrf
-					</form>
+				</form>
           		</li>
         	</ul>
     	</nav>
@@ -75,7 +60,7 @@
 </div>
 <!-- /.sidebar -->
 </aside>
-@include('management.item_images_table')
+@include('management.update_user_form')
 @include('layouts.footer')
 
 

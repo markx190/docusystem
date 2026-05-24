@@ -2,7 +2,7 @@
 <!-- Main Sidebar Container -->
 	<aside class="main-sidebar elevation-4" style="background-color: #FFFFFF;">
     	<!-- Brand Logo -->
-      	<a href="http://buzytown.com" style="text-decoration: none; color: red;" class="brand-link">
+      	<a href="/" style="text-decoration: none; color: red;" class="brand-link">
         <center style="font-weight: 700; font-size: 24.3px;">Docusystem</center>
     </a>
     <!-- Sidebar -->
@@ -18,7 +18,7 @@
 				<img src="/images/default_avatar.jpg" class="img-circle elevation-2" 
 				style="width: 36px; height: 34px;" alt="User Image">
 				@endif
-			<h6 style="margin-top: 10px;">Hi, Hi, {{ $user->firstname ?? '' }}</h6>
+			<h6 style="margin-top: 10px;">Hi, {{ $user->firstname ?? '' }}</h6>
 		</div>
     </div>
 	<hr style="margin-top: -25px;">
@@ -29,34 +29,24 @@
           	<!-- Add icons to the links using the .nav-icon class
             	with font-awesome or any other icon font library -->
           		<li class="nav-item has-treeview menu-open">
-            		<a href="/manage_items" class="nav-link active">
+            		<a href="/dashboard" class="nav-link active">
               			<i class="nav-icon fas fa-tachometer-alt"></i>
-              		<p>Preferences <i class="right fas fa-angle-left"></i></p>
+              		<p>Dashboard <i class="right fas fa-angle-left"></i></p>
             	</a>
         		<ul class="nav nav-treeview">
+					@if($user->account_type == 'Administrator')
         		    <li class="nav-item">
-                		<a href="/dashboard" class="nav-link">
-                  			<i class="fa fa-desktop nav-icon"></i>
-                  			<p>Dashboard</p>
+                		<a href="/manage_items" class="nav-link">
+                  			<i class="fa fa-folder nav-icon"></i>
+                  			<p>Files</p>
                 		</a>
             		</li>
-            		@if($user->account_type == 'Host')
-					<li class="nav-item">
-                		<a href="/manage_units" class="nav-link">
-                  			<i class="fa fa-building nav-icon"></i>
-                  			<p>Units</p>
-                		</a>
-            		</li>
-            		<li class="nav-item">
-                		<a style="cursor: pointer;" href="/manage_guests" class="nav-link">
-                  			<i class="fa fa-users nav-icon"></i>
-                  			<p>Guests</p>
-                		</a>
-            		</li>
-					<li class="nav-item">
-                		<a style="cursor: pointer;" href="/manage_bookings" class="nav-link">
-                  			<i class="fa fa-tags nav-icon"></i>
-                  			<p>Bookings</p>
+            		@endif
+				    @if($user->account_type == 'Staff')
+        		    <li class="nav-item">
+                		<a href="/manage_items" class="nav-link">
+                  			<i class="fa fa-folder nav-icon"></i>
+                  			<p>Files</p>
                 		</a>
             		</li>
             		@endif

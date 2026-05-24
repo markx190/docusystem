@@ -3,7 +3,7 @@
     <head>
 		<meta charset="utf-8">
 		<meta http-equiv="X-UA-Compatible" content="IE=edge">
-			<title>Whilers | Admin Backoffice</title>
+		<title>Docusystem | Admin Backoffice</title>
 		<!-- Tell the browser to be responsive to screen width -->
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 		<!-- Font Awesome -->
@@ -55,50 +55,12 @@
         <!-- <div class="input-group input-group-sm">
             <input style="background-color: #D2D7D3;" class="form-control form-control-navbar" type="search" placeholder="Search" aria-label="Search">
                 <div class="input-group-append">
-                <button class="btn btn-navbar" style="background-color: #D2D7D3;" type="submit">
-                    <i class="fas fa-search" style="color: #757D75;"></i>
-                </button>
-            </div>
-        </div> -->
-    </form>
+                	<button class="btn btn-navbar" style="background-color: #D2D7D3;" type="submit">
+                    	<i class="fas fa-search" style="color: #757D75;"></i>
+                	</button>
+            	</div>
+        	</div> -->
+    	</form>
     <!-- Right navbar links -->
-    <ul class="navbar-nav ml-auto">
-        <!-- Messages Dropdown Menu -->
-        
-      		<!-- Notifications Dropdown Menu -->
-      		<li class="nav-item dropdown">
-        		<a style="color: #EEEEEE;" class="nav-link" data-toggle="dropdown" href="#">
-          			<i class="far fa-bell"></i>
-          			<span class="badge badge-warning navbar-badge">15</span>
-        		</a>
-        	<div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
-          	<span class="dropdown-item dropdown-header">15 Notifications</span>
-         	<div class="dropdown-divider"></div>
-          		<a href="#" class="dropdown-item">
-            		<i class="fas fa-envelope mr-2"></i> 4 new messages
-            	<span class="float-right text-muted text-sm">3 mins</span>
-         	</a>
-          	<div class="dropdown-divider"></div>
-          		<a href="#" class="dropdown-item">
-            		<i class="fas fa-users mr-2"></i> 8 friend requests
-            	<span class="float-right text-muted text-sm">12 hours</span>
-          	</a>
-          	<div class="dropdown-divider"></div>
-          		<a href="#" class="dropdown-item">
-            		<i class="fas fa-file mr-2"></i> 3 new reports
-            	<span class="float-right text-muted text-sm">2 days</span>
-          	</a>
-          	<div class="dropdown-divider"></div>
-          	<a href="#" class="dropdown-item dropdown-footer">See All Notifications</a>
-        		</div>
-    		</li>
-    	@if(session()->get('GoogleName') == 'Admin')
-    		<li class="nav-item">
-        		<a class="nav-link" style="color: #EEEEEE;" data-widget="control-sidebar" data-slide="true" href="#">
-            		<i class="fas fa-th-large"></i>
-            	</a>
-       		</li>
-   	 	@endif
-    </ul>
 </nav>
 <!-- /.navbar -->

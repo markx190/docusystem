@@ -2,7 +2,7 @@
 <!-- Main Sidebar Container -->
 	<aside class="main-sidebar elevation-4" style="background-color: #FFFFFF;">
     	<!-- Brand Logo -->
-      	<a href="https://whilers.com" style="text-decoration: none; color: red;" class="brand-link">
+      	<a href="/" style="text-decoration: none; color: red;" class="brand-link">
         <center style="font-weight: 700; font-size: 24.3px;">whilers</center>
     </a>
     <!-- Sidebar -->

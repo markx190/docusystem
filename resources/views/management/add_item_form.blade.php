@@ -10,7 +10,7 @@
             <div class="col-sm-6">
                 <ol class="breadcrumb float-sm-right">
                     <li class="breadcrumb-item"><a href="/dashboard">Dashboard</a></li>
-                    <li class="breadcrumb-item active"></li> Item
+                    <li class="breadcrumb-item active"></li> Files
                 </ol>
             </div><!-- /.col -->
         </div><!-- /.row -->
@@ -23,7 +23,7 @@
             <div class="card mb-4">  
             <div class="card-header subscription-h">
         <i class="fa fa-plus-circle"></i>
-    Add New Item
+    Add New File
 </div> 
 @if(session()->has('add_item_success'))
 <div class="col-md-12" style="margin-top: 12px;">
@@ -49,37 +49,29 @@
             <label><b>Category</b></label>
                 <select class="form-control" name="category">
                     <option value="{{ old('category') }}">{{ old('category') }}</option>
-                    <option value="Food and Groceries">Food and Groceries</option>
-                    <option value="Pre Loved Items">Pre Loved Items</option>
-                    <option value="Pre Owned Items">Pre Onwed Items</option>
-                    <option value="Electronic and Gadgets">Electronic and Gadgets</option>
-                    <option value="Vintage Items">Vintage Items</option>
-                    <option value="Music Instruments">Music Instruments</option>
-                    <option value="Apparels">Apparels</option>
+                    <option value="PSA">PSA</option>
+                    <option value="SF10">SF10</option>
+                    <option value="FORM 137">FORM 137</option>
+                    <option value="SALARY">SALARY</option>
+                    <option value="CARD">CARD</option>
                 </select>
             <span class="text-danger">@error('category') {{ $message }} @enderror</span>
         </div>
         <div class="col-md-3">
-            <label><b>Item Name</b></label>
+            <label><b>File Name</b></label>
                 <input id="fStyle" type="text" class="form-control item_name" value="{{ old('item_name') }}" name="item_name" />
             <span class="text-danger">@error('item_name') {{ $message }} @enderror</span>
         </div>
         <div class="col-md-3">
-            <label><b>Generic</b></label>
+            <label><b>File Owner</b></label>
                 <input id="fStyle" type="text" class="form-control generic" value="{{ old('generic') }}" name="generic" />
             <span class="text-danger">@error('generic') {{ $message }} @enderror</span>
         </div>
         <div class="col-md-3">
-            <label><b>Brand</b></label>
-                <input id="mStyle" type="text" class="form-control brand" value="{{ old('brand') }}" name="brand">
+            <label><b>Tracking Number</b></label>
+                <input id="mStyle" type="text" class="form-control brand" name="uom">
+                <input id="mStyle" type="hidden" class="form-control brand" value="{{ $user->company }}" name="brand">
             <span class="text-danger">@error('brand') {{ $message }} @enderror</span>
-        </div>
-        <div class="col-md-3">
-            <div class="form-group">
-                <label><b>Unit Price</b></label>
-                    <input id="lStyle" type="text" class="form-control unitprice" value="0.00" name="unit_price" />
-                <span class="text-danger">@error('unit_price') {{ $message }} @enderror</span>
-            </div>
         </div>
         <div class="col-md-12">
             <div class="form-group">
@@ -89,22 +81,37 @@
             </div>
         </div>
         <div class="col-md-3">
-            <label><b>Unit of Measure</b></label>
-                <input id="mStyle" type="text" class="form-control uom" value="{{ old('uom') }}" name="uom">
-            <span class="text-danger">@error('uom') {{ $message }} @enderror</span>
+            <label><b>Status</b></label>
+                <select class="form-control" name="status">
+                    <option value="{{ old('status') }}">{{ old('status') }}</option>
+                    <option value="New">New</option>
+                    <option value="For Release">For Release</option>
+                    <option value="For Verification">For Verification</option>
+                    <option value="Pending">Pending</option>
+                    <option value="For Approval">For Approval</option>
+                    <option value="Declined">Declined</option>
+                    <option value="Approved">Approved</option>
+                </select>
         </div>
-        <div class="col-md-3">
-            <div class="form-group">
-                <label><b>Total Stock Count</b></label>
-                    <input id="lStyle" type="text" class="form-control total_stock" value="{{ old('total_stock') }}" name="total_stock" />
-                <span class="text-danger">@error('total_stock') {{ $message }} @enderror</span>
-            </div>
-        </div>
-        
         <div class="col-md-9">
-            <label><b>Item Image</b></label>
-                <input style="height: 2.8em;" type="file" name="item_avatar" class="form-control a-item-avatar">
-            <span class="text-danger">@error('item_avatar') {{ $message }} @enderror</span>
+            <div class="col-md-9">
+                <label><b>Item Image</b></label>
+        <div class="drop-area" id="dropArea">
+            <p class="drop-text">
+                Drag & Drop Image Here<br>
+            <span>or click to browse</span>
+        </p>
+        <input type="file"
+               name="item_avatar"
+               id="fileInput"
+               class="d-none"
+               accept="image/*">
+        <div class="preview-container" id="previewContainer"></div>
+    </div>
+    <span class="text-danger">
+        @error('item_avatar') {{ $message }} @enderror
+    </span>
+</div>
         </div>
     </div>
 </div>
@@ -123,12 +130,137 @@
         </div>
     </div>
 </main>
+<script>
+const dropArea = document.getElementById('dropArea');
+const fileInput = document.getElementById('fileInput');
+const previewContainer = document.getElementById('previewContainer');
+
+dropArea.addEventListener('click', () => {
+    fileInput.click();
+});
+
+fileInput.addEventListener('change', function () {
+    handleFile(this.files[0]);
+});
+
+dropArea.addEventListener('dragover', (e) => {
+    e.preventDefault();
+    dropArea.classList.add('dragover');
+});
+
+dropArea.addEventListener('dragleave', () => {
+    dropArea.classList.remove('dragover');
+});
+
+dropArea.addEventListener('drop', (e) => {
+    e.preventDefault();
+    dropArea.classList.remove('dragover');
+
+    const file = e.dataTransfer.files[0];
+    fileInput.files = e.dataTransfer.files;
+
+    handleFile(file);
+});
+
+function handleFile(file) {
+
+    if (!file) return;
+
+    previewContainer.innerHTML = '';
+
+    const reader = new FileReader();
+
+    reader.onload = function (e) {
+
+        const wrapper = document.createElement('div');
+        wrapper.style.position = 'relative';
+        wrapper.style.display = 'inline-block';
+
+        const img = document.createElement('img');
+        img.src = e.target.result;
+        img.classList.add('preview-image');
+
+        const removeBtn = document.createElement('button');
+        removeBtn.innerHTML = '&times;';
+        removeBtn.classList.add('remove-btn');
+
+        removeBtn.onclick = function () {
+            previewContainer.innerHTML = '';
+            fileInput.value = '';
+        };
+
+        wrapper.appendChild(img);
+        wrapper.appendChild(removeBtn);
+
+        previewContainer.appendChild(wrapper);
+    };
+
+    reader.readAsDataURL(file);
+}
+</script>
 <style>
     .subscription-h {
         background-color: #BFBFBF;
         margin-top: -16px;
     }
+
+.drop-area {
+    border: 2px dashed #999;
+    border-radius: 10px;
+    padding: 30px;
+    text-align: center;
+    cursor: pointer;
+    background: #fafafa;
+    transition: 0.3s;
+    position: relative;
+}
+
+.drop-area:hover {
+    background: #f0f0f0;
+}
+
+.drop-area.dragover {
+    border-color: #007bff;
+    background: #eef5ff;
+}
+
+.drop-text {
+    color: #666;
+    font-size: 15px;
+}
+
+.drop-text span {
+    font-size: 13px;
+    color: #999;
+}
+
+.preview-container {
+    margin-top: 15px;
+    position: relative;
+}
+
+.preview-image {
+    max-width: 200px;
+    border-radius: 8px;
+    border: 1px solid #ddd;
+    padding: 5px;
+}
+
+.remove-btn {
+    position: absolute;
+    top: -10px;
+    right: -10px;
+    background: red;
+    color: white;
+    border: none;
+    border-radius: 50%;
+    width: 28px;
+    height: 28px;
+    cursor: pointer;
+    font-weight: bold;
+}
 </style>
+
 
 
 

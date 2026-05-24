@@ -67,7 +67,6 @@ class ManageItemsService
         }
     }
 
-    
     public function unitsDataTable($request)
     {
         try {
@@ -129,19 +128,19 @@ class ManageItemsService
                 $logData = User::where('id', Session::get('login_id'))->first();
             }
             
-            $items = DB::table('items')->where('company_id', $logData->account_id)->get();
+            $items = DB::table('items')->get();
             
             $results = datatables()->of($items);
                 return $results
                     ->addColumn('action', function ($data) {
-                        $action = '<a target="_blank" href="add_image_form/'. $data->item_id_no .'" style="text-decoration:none;">
+                        $action = '<a href="add_image_form/'. $data->item_id_no .'" style="text-decoration:none;">
                             <button class="btn btn-primary btn-xs" type="button"
                                 data-e-id="'. $data->id .'"
                                 data-item-id-no="'. $data->item_id_no .'">
-                            <i class="fa fa-image"></i> Add Image
+                            <i class="fa fa-file"></i> Add File
                         </button>
                     </a>
-                    <a target="_blank" href="/update_item_form/'. $data->item_id_no .'" style="text-decoration:none;">
+                    <a href="/update_item_form/'. $data->item_id_no .'" style="text-decoration:none;">
                         <button class="btn btn-warning btn-xs" type="button"
                             data-e-id="'. $data->id .'"
                                 data-item-id-no="'. $data->item_id_no .'">
@@ -197,7 +196,8 @@ class ManageItemsService
         }
         $request->validate([
             'item_name' => 'required',
-            'unit_price' => 'required',
+            'category' => 'required',
+            'generic' => 'required',
             'item_avatar' => 'required|image|mimes:jpeg,png,jpg|max:3048'
         ]);
 
@@ -216,13 +216,11 @@ class ManageItemsService
         $items->company_id = $logData->account_id;
         $items->item_name = $request->item_name;
         $items->generic = $request->generic;
-        $items->unit_price = $request->unit_price;
         $items->brand = $request->brand;
         $items->uom = $request->uom;
         $items->category = $request->category;
         $items->description = $request->description;
-        $items->total_stock = $request->total_stock;
-        $items->status = 'Good Item';
+        $items->status = 'New';
         $saved = $items->save();
         
         if ($saved) {               
@@ -469,7 +467,7 @@ class ManageItemsService
     }
     
     public function addAmenity(Request $request)
-{
+    {
     try {
         if (!Session::has('login_id')) {
             return back()->with('error', 'Please login first.');
@@ -511,13 +509,11 @@ class ManageItemsService
 
         return back()->with('add_item_image_success', 'Amenity uploaded successfully.');
 
-    } catch (\Exception $e) {
-        \Log::error($e->getMessage());
-        return back()->with('error', 'Something went wrong. You are missing required field');
+        } catch (\Exception $e) {
+            \Log::error($e->getMessage());
+            return back()->with('error', 'Something went wrong. You are missing required field');
+        }
     }
-}
-
-
 
     public function updateItemForm($request)
     {
@@ -542,55 +538,81 @@ class ManageItemsService
     }
 
     public function updateItem(Request $request)
-    {
-        $request->validate([
-            'item_name' => 'required',
-            'generic' => 'required',
-            'unit_price' => 'required',
-            'uom' => 'required',
-            'brand' => 'required',
-            'category' => 'required',
-            'description' => 'required',
-            'total_stock' => 'required',
-            'status' => 'required',
-            'item_avatar' => 'nullable|image|mimes:jpeg,png,jpg|max:3048'
-        ]);
-    
-        $item = Item::where('item_id_no', $request->itemIdNo)->firstOrFail();
-    
-        // Handle image update
-        if ($request->hasFile('item_avatar')) {
-    
-            // Delete old image
-            if ($item->item_avatar && file_exists(public_path('uploads/item_avatars/' . $item->item_avatar))) {
-                unlink(public_path('uploads/item_avatars/' . $item->item_avatar));
-            }
-    
-            $itemAvatar = $request->file('item_avatar');
-            $filename = time() . '.' . $itemAvatar->getClientOriginalExtension();
-            $location = public_path('uploads/item_avatars/' . $filename);
-    
-            Image::make($itemAvatar)->resize(510, 850)->save($location);
-            $item->item_avatar = $filename;
-        }
-    
-        // Update fields
-        $item->item_name = $request->item_name;
-        $item->generic = $request->generic;
-        $item->unit_price = $request->unit_price;
-        $item->brand = $request->brand;
-        $item->uom = $request->uom;
-        $item->category = $request->category;
-        $item->description = $request->description;
-        $item->total_stock = $request->total_stock;
-        $item->status = $request->status;
-    
-        if ($item->save()) {
-            return back()->with('update_item_success', 'Item updated successfully');
-        }
-    
-        return back()->with('update_item_failed', 'Something went wrong while updating');
+{
+    if (Session::has('login_id')) {
+        $logData = User::where('id', Session::get('login_id'))->first();
     }
+
+    $validator = Validator::make($request->all(), [
+        'item_name' => 'required',
+        'brand' => 'required',
+        'category' => 'required',
+        'description' => 'required',
+        'status' => 'required',
+        'item_avatar' => 'nullable|image|mimes:jpeg,png,jpg|max:3048'
+    ], [
+        'item_name.required' => 'Item Name is required.',
+        'brand.required' => 'Department is required.',
+        'category.required' => 'Category is required.',
+        'description.required' => 'Description is required.',
+        'status.required' => 'Status is required.',
+    ]);
+
+    if ($validator->fails()) {
+        return redirect()->back()
+            ->withErrors($validator)
+            ->withInput();
+    }
+
+    $item = Item::where('item_id_no', $request->itemIdNo)->firstOrFail();
+
+    // Handle image update
+    if ($request->hasFile('item_avatar')) {
+
+        // Delete old image
+        if ($item->item_avatar &&
+            file_exists(public_path('uploads/item_avatars/' . $item->item_avatar))) {
+
+            unlink(public_path('uploads/item_avatars/' . $item->item_avatar));
+        }
+
+        $itemAvatar = $request->file('item_avatar');
+
+        $filename = time() . '.' .
+                    $itemAvatar->getClientOriginalExtension();
+
+        $location = public_path('uploads/item_avatars/' . $filename);
+
+        Image::make($itemAvatar)
+            ->resize(510, 850)
+            ->save($location);
+
+        $item->item_avatar = $filename;
+    }
+
+    // Update fields
+    $item->item_name = $request->item_name;
+    $item->generic = $request->generic;
+    $item->unit_price = $request->unit_price;
+    $item->brand = $request->brand;
+    $item->uom = $request->uom;
+    $item->category = $request->category;
+    $item->description = $request->description;
+    $item->total_stock = $request->total_stock;
+    $item->status = $request->status . ' - Updated under ' . $logData->company;
+
+    if ($item->save()) {
+        return back()->with(
+            'update_item_success',
+            'Item updated successfully'
+        );
+    }
+
+    return back()->with(
+        'update_item_failed',
+        'Something went wrong while updating'
+    );
+}
     
     // Update Unit
     public function updateUnitForm($request)
@@ -771,15 +793,16 @@ class ManageItemsService
     
     public function checkOrders()
     {
-        $orders = DB::table('orders')
-                      ->join('bz_transactions', 'orders.order_id', '=', 'bz_transactions.order_id')
-            ->where('orders.order_status', 'Unpaid')   // ✅ SIMPLE & CORRECT
-            ->orderBy('orders.order_id', 'desc')
+        $orders = DB::table('items')
+                      ->join('users', 'items.company_id', '=', 'users.account_id')
+            ->where('items.status', 'New')   // ✅ SIMPLE & CORRECT
+            ->orderBy('items.id', 'desc')
             ->get([
-                'orders.order_id',
-                'bz_transactions.firstname',
-                'bz_transactions.lastname',
-                'bz_transactions.mobile_number'
+                'items.id',
+                'users.firstname',
+                'users.lastname',
+                'users.company',
+                'items.generic'
             ]);
     
         return response()->json($orders);
@@ -787,9 +810,9 @@ class ManageItemsService
 
     public function markOrderChecked(Request $request)
     {
-        DB::table('orders')
-            ->where('order_id', $request->order_id)
-            ->update(['order_status' => 'Checked']);
+        DB::table('items')
+            ->where('id', $request->order_id)
+            ->update(['status' => 'Checked'. $logData->company ]);
     
         return response()->json(['success' => true]);
     }

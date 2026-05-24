@@ -21,7 +21,7 @@
     <div class="container">
         <!-- Logo -->
         <a class="navbar-brand whilers-logo" href="/">
-            <span><i class="fa fa-cubes" style="color: #ffeb3b;"></i> whilers market</span>
+            <span><i class="fa fa-cubes" style="color: #ffeb3b;"></i> Docusystem</span>
         </a>
 
         <!-- Mobile toggle -->

@@ -2,7 +2,7 @@
 <!-- Main Sidebar Container -->
 	<aside class="main-sidebar elevation-4" style="background-color: #FFFFFF;">
     	<!-- Brand Logo -->
-      	<a href="#" style="text-decoration: none; color: red;" class="brand-link">
+      	<a href="http://buzytown.com" style="text-decoration: none; color: red;" class="brand-link">
         <center style="font-weight: 700; font-size: 24.3px;">Docusystem</center>
     </a>
     <!-- Sidebar -->
@@ -33,14 +33,27 @@
               		<p>Preferences <i class="right fas fa-angle-left"></i></p>
             	</a>
         		<ul class="nav nav-treeview">
-					@if($user->account_type == 'Staff')
+					@if($user->account_type == 'Host')
             		<li class="nav-item">
-                		<a style="cursor: pointer;" href="/manage_items" class="nav-link">
-                  			<i class="fa fa-database nav-icon"></i>
-                  			<p>Files</p>
+                		<a style="cursor: pointer;" href="/manage_units" class="nav-link">
+                  			<i class="fa fa-image nav-icon"></i>
+                  			<p>Units</p>
+                		</a>
+            		</li>
+					<li class="nav-item">
+                		<a style="cursor: pointer;" href="/manage_guests" class="nav-link">
+                  			<i class="fa fa-users nav-icon"></i>
+                  			<p>Guests</p>
+                		</a>
+            		</li>
+					<li class="nav-item">
+                		<a style="cursor: pointer;" href="/manage_bookings" class="nav-link">
+                  			<i class="fa fa-tags nav-icon"></i>
+                  			<p>Bookings</p>
                 		</a>
             		</li>
 					@else
+					
 					@endif
 					<!-- @if($user->account_type == 'Applicant')
 					<li class="nav-item">
@@ -58,28 +71,6 @@
                 		</a>
             		</li>
 					@endif -->
-					@if($user->account_type == 'Staff')
-					<li class="nav-item">
-                		<a style="cursor: pointer;" href="/manage_items" class="nav-link">
-                  			<i class="fa fa-folder nav-icon"></i>
-                  			<p>Files</p>
-                		</a>
-            		</li>
-					@endif
-					@if($user->account_type == 'Administrator')
-					<li class="nav-item">
-                		<a style="cursor: pointer;" href="/manage_items" class="nav-link">
-                  			<i class="fa fa-folder nav-icon"></i>
-                  			<p>Files</p>
-                		</a>
-            		</li>
-					<li class="nav-item">
-                		<a style="cursor: pointer;" href="/manage_users" class="nav-link">
-                  			<i class="fa fa-users nav-icon"></i>
-                  			<p>Users</p>
-                		</a>
-            		</li>
-					@endif
 					<li class="nav-item">
                 		<a href="{{ route('edit_account') }}" style="cursor: pointer;" class="nav-link">
                   			<i class="fa fa-id-card nav-icon"></i>
@@ -112,5 +103,5 @@
 </div>
 <!-- /.sidebar -->
 </aside>
-@include('dashboard.main')
+@include('main.topic')
 @include('layouts.footer')

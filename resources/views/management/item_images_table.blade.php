@@ -3,12 +3,12 @@
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h6>Manage Item Images</h6>
+                    <h6></h6>
                 </div>
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
                         <li class="breadcrumb-item"><a href="/dashboard">Home</a></li>
-                        <li class="breadcrumb-item active">Item Images</li>
+                        <li class="breadcrumb-item active">Item File</li>
                     </ol>
                 </div>
             </div>
@@ -16,9 +16,9 @@
     </section>
     <section class="content">
         <div class="container d-flex justify-content-center">
-            <div class="card" style="width: 1150px; margin-top: -10px;">
-                <div class="card-header bg-primary text-white">
-                    <i class="fa fa-plus-circle"></i> Item Images
+            <div class="card" style="width: 1250px; margin-top: -10px;">
+                <div class="card-header bg-secondary text-white">
+                    <i class="fa fa-plus-circle"></i> Item Files
                 </div>
                 <div class="card-body">
                     @if(session('add_item_image_success'))
@@ -35,7 +35,7 @@
                         </div>
 
                         <div class="form-group">
-                            <label><b>Upload Images/Videos</b></label>
+                            <label><b>Upload Files</b></label>
                                 <div id="drop-area" class="drop-area">
                                 <p>Drag & Drop files here</p>
                             <input type="file" id="fileElem" multiple accept="image/*,video/*" style="display:none;">
@@ -43,23 +43,23 @@
 
                             <div id="gallery" class="gallery"></div>
                         </div>
-
-                        <button type="submit" class="btn btn-primary btn-block">Upload</button>
+                        <div class="col-md-3">
+                            <button type="submit" class="btn btn-primary btn-block">Upload</button>
+                        </div>
                     </form>
 
                     <hr>
-    <!-- Alert placeholder -->
-    <div id="deleteAlert" class="alert alert-success alert-dismissible fade show" 
-     style="display:none; position:fixed; top:20px; right:20px; z-index:9999; min-width:250px;">
-    <span id="deleteAlertMsg"></span>
-    {{-- <button type="button" class="btn btn-sm btn-light ms-2" style="height: 1.9em;"
-            onclick="document.getElementById('deleteAlert').style.display='none';">
-        X
-    </button> --}}
-</div>
+                <!-- Alert placeholder -->
+                <div id="deleteAlert" class="alert alert-success alert-dismissible fade show" 
+                style="display:none; position:fixed; top:20px; right:20px; z-index:9999; min-width:250px;">
+                <span id="deleteAlertMsg"></span>
+                {{-- <button type="button" class="btn btn-sm btn-light ms-2" style="height: 1.9em;"
+                        onclick="document.getElementById('deleteAlert').style.display='none';">
+                    X
+                </button> --}}
+            </div>
 
-
-        <h6 class="mt-4">Uploaded Images</h6>
+        <h6 class="mt-4"><b>Uploaded Images</b></h6>
                     <div class="row">
             @foreach($itemImages as $image)
             <div class="col-4 col-md-3 mb-4 text-center image-card"

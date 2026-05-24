@@ -83,14 +83,14 @@
          aria-labelledby="orderBell">
 
         <span class="dropdown-item dropdown-header text-left">
-            Pending Orders
+            New Documents
         </span>
 
         <div class="dropdown-divider"></div>
 
         <div id="orderList">
             <span class="dropdown-item text-muted text-center">
-                No unpaid orders 🎉
+                Untouch Documents 🎉
             </span>
         </div>
     </div>
@@ -147,7 +147,8 @@ $(function () {
 
                             <div class="flex-grow-1">
                                 <strong>${order.firstname ?? 'Unknown'} ${order.lastname ?? ''}</strong><br>
-                                <small class="text-muted">${order.mobile_number ?? ''}</small>
+                                <small class="text-muted">${order.company ?? ''}</small>
+                                <small class="text-muted">${order.item_name ?? ''}</small>
                             </div>
                         </a>
                         <div class="dropdown-divider"></div>

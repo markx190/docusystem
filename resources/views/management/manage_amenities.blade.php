@@ -2,8 +2,8 @@
 <!-- Main Sidebar Container -->
 <aside class="main-sidebar elevation-4" style="background-color: #FFFFFF;">
     <!-- Brand Logo -->
-		<a href="http://whilers.com" style="text-decoration: none; color: red;" class="brand-link">
-        	<center>whilers</center>
+		<a href="#" style="text-decoration: none; color: red;" class="brand-link">
+        	<center>Docusystem</center>
 		</a>
     <!-- Sidebar -->
 <hr style="margin-top: -8px;">
@@ -22,7 +22,6 @@
 		</div>
     </div>
 	<hr style="margin-top: -25px;">
-
     <!-- Sidebar Menu -->
     <nav class="mt-2">
         <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
