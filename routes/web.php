@@ -152,6 +152,12 @@ Route::get('/add_amenity_form/{itemIdNo}', 'App\Http\Controllers\dashboard\Manag
 Route::post('/add_amenity', 'App\Http\Controllers\dashboard\ManageItemsController@addAmenity')->name('add_amenity');
 Route::post('/delete_amenity', 'App\Http\Controllers\dashboard\ManageItemsController@deleteAmenity')->name('delete_amenity');
 
+// Add File History
+Route::get('/add_file_history_form/{itemId}', 'App\Http\Controllers\dashboard\ManageItemsController@addFileHistoryForm');
+Route::post('/add_file_history', 'App\Http\Controllers\dashboard\ManageItemsController@addFileHistory')->name('add_file_history');
+Route::get('/file_history_datatable', 'App\Http\Controllers\dashboard\ManageItemsController@fileHistoryDataTable')->name('users.datatables');
+
+
 // CHeck Orders
 Route::get('/check_orders', 'App\Http\Controllers\dashboard\ManageItemsController@checkOrders')
     ->name('check_orders');

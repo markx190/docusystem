@@ -37,7 +37,7 @@ class ManageUsersService
     }
 
     public function usersDataTable($request)
-    {\Log::info('users');
+    {
         try {
             $users = DB::table('users')->get();
             \Log::info($users);

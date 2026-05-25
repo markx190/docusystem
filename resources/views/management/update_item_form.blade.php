@@ -82,7 +82,7 @@
     <div class="col-md-3">
         <label><b>Department</b></label>
         <input type="text" class="form-control" name="brand"
-               value="{{ $item->brand }}">
+               value="{{ $item->brand }}" readonly>
     </div>
 
    
@@ -95,21 +95,8 @@
     </div>
     <div class="col-md-3">
         <label><b>Traking No.</b></label>
-        <input type="text" class="form-control" name="uom"
+            <input type="text" class="form-control" name="uom"
                value="{{ $item->uom }}">
-    </div>
-    <div class="col-md-6">
-        <label><b>Status</b></label>
-        <select class="form-control" name="status">
-            <option value="{{ $item->status }}">{{ $item->status }}</option>
-            <option value="New">New</option>
-            <option value="For Release">For Release</option>
-            <option value="For Verification">For Verification</option>
-            <option value="Pending">Pending</option>
-            <option value="For Approval">For Approval</option>
-            <option value="Declined">Declined</option>
-            <option value="Approved">Approved</option>
-        </select>
     </div>
 </div>
 <div class="row">

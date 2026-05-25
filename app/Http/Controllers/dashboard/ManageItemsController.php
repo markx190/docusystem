@@ -48,6 +48,15 @@ class ManageItemsController extends Controller
             return $e->getMessage();
         }
     }
+
+    public function fileHistoryDataTable(Request $request)
+    {
+        try {
+            return $this->manageItem->fileHistoryDataTable($request);
+        } catch (Exception $e){
+            return $e->getMessage();
+        }
+    }
     
     public function unitsDataTable(Request $request)
     {
@@ -135,6 +144,20 @@ class ManageItemsController extends Controller
         } catch (Exception $e){
             return $e->getMessage();
         }
+    }
+
+    public function addFileHistoryForm(Request $request)
+    {
+        try {
+            return $this->manageItem->addFileHistoryForm($request);
+        } catch (Exception $e){
+            return $e->getMessage();
+        }
+    }
+
+    public function addFileHistory(Request $request)
+    {
+       return $this->manageItem->addFileHistory($request);
     }
     
     public function updateUnitForm(Request $request)

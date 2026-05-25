@@ -26,7 +26,7 @@
         </div>
         <hr class="footer-divider">
         <div class="footer-copy text-left">
-            © 2025 <strong>whilers.com</strong>
+            © 2025 <strong>Docusystem</strong>
         </div>
     </div>
 </footer>

@@ -15,6 +15,7 @@ use DB;
 use App\Models\Item;
 use App\Models\WStudios;
 use App\Models\ItemImages;
+use App\Models\FileHistory;
 use App\Models\Facilities;
 use App\Models\Amenities;
 use Image;
@@ -133,11 +134,11 @@ class ManageItemsService
             $results = datatables()->of($items);
                 return $results
                     ->addColumn('action', function ($data) {
-                        $action = '<a href="add_image_form/'. $data->item_id_no .'" style="text-decoration:none;">
+                        $action = '<a href="add_file_history_form/'. $data->id .'" style="text-decoration:none;">
                             <button class="btn btn-primary btn-xs" type="button"
                                 data-e-id="'. $data->id .'"
-                                data-item-id-no="'. $data->item_id_no .'">
-                            <i class="fa fa-file"></i> Add File
+                                data-item-id-no="'. $data->id .'">
+                            <i class="fa fa-file"></i> View History
                         </button>
                     </a>
                     <a href="/update_item_form/'. $data->item_id_no .'" style="text-decoration:none;">
@@ -154,6 +155,32 @@ class ManageItemsService
             return $e->getMessage();
         }
     }
+
+    public function fileHistoryDataTable($request)
+    {
+        try {
+            date_default_timezone_set('Asia/Manila');
+            $dTime = date('F j, Y');
+            
+            if (Session::has('login_id')){
+                $logData = User::where('id', Session::get('login_id'))->first();
+            }
+            
+            $history = DB::table('file_history')
+                       ->join('users', 'users.account_id', '=', 'file_history.updated_by')
+                       ->get();
+            
+            $history = datatables()->of($history);
+            return $history
+            ->editColumn('updated_by', function ($data) {
+                        return $data->firstname .' '.$data->lastname;
+                 })
+            ->make();
+        } catch(Exception $e) {
+            return $e->getMessage();
+        }
+    }
+
 
     public function addItemForm(Request $request)
     {
@@ -198,7 +225,7 @@ class ManageItemsService
             'item_name' => 'required',
             'category' => 'required',
             'generic' => 'required',
-            'item_avatar' => 'required|image|mimes:jpeg,png,jpg|max:3048'
+            'item_avatar' => 'required|image|mimes:jpeg,pdf,png,jpg|max:3048'
         ]);
 
         $items = new Item;
@@ -216,7 +243,7 @@ class ManageItemsService
         $items->company_id = $logData->account_id;
         $items->item_name = $request->item_name;
         $items->generic = $request->generic;
-        $items->brand = $request->brand;
+        $items->brand = $logData->company;
         $items->uom = $request->uom;
         $items->category = $request->category;
         $items->description = $request->description;
@@ -353,6 +380,57 @@ class ManageItemsService
         } catch (Exception $e){
             return $e->getMessage(); 
         }
+    }
+
+    public function addFileHistoryForm(Request $request)
+    {
+        try {
+            date_default_timezone_set('Asia/Manila');
+            $dTime = date('F j, Y');
+            if (Session::has('login_id')){
+                $logData = User::where('id', Session::get('login_id'))->first();
+            }
+            $items = Item::where('id', $request->itemId)->first();
+         
+            return view('management.add_file_history_component', [
+                'dateTime' => $dTime,
+                'items' => $items,
+                'user' => $logData
+            ]);
+        } catch (Exception $e){
+            return $e->getMessage(); 
+        }
+    }
+
+    public function addFileHistory(Request $request)
+    {
+        if (Session::has('login_id')){
+            $logData = User::where('id', Session::get('login_id'))->first();
+        }
+
+        $request->validate([
+            'comments' => 'required',
+            'file_status' => 'required'
+            ],
+            [
+            'comments.required' => 'Comment is required.',
+            'status.required' => 'Status is required'
+            ]
+        );
+    
+        $history = new FileHistory();
+        $history->file_id = $request->file_id;
+        $history->comments = $request->comments;
+        $history->updated_by = $logData->account_id;    
+        $history->department = $logData->company;   
+        $history->file_status = $request->file_status;    
+        $history->save();
+    
+        if ($history) {
+            return back()->with('history_success', 'File Comments was added');
+        }
+    
+        return back()->with('fail', 'Something went wrong with your comments');
     }
     
     public function addAmenityForm(Request $request)
@@ -548,7 +626,6 @@ class ManageItemsService
         'brand' => 'required',
         'category' => 'required',
         'description' => 'required',
-        'status' => 'required',
         'item_avatar' => 'nullable|image|mimes:jpeg,png,jpg|max:3048'
     ], [
         'item_name.required' => 'Item Name is required.',
@@ -594,12 +671,11 @@ class ManageItemsService
     $item->item_name = $request->item_name;
     $item->generic = $request->generic;
     $item->unit_price = $request->unit_price;
-    $item->brand = $request->brand;
+    $item->brand = $logData->company;
     $item->uom = $request->uom;
     $item->category = $request->category;
     $item->description = $request->description;
     $item->total_stock = $request->total_stock;
-    $item->status = $request->status . ' - Updated under ' . $logData->company;
 
     if ($item->save()) {
         return back()->with(

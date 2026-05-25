@@ -41,7 +41,7 @@
                 <th class="t-th">Files Name</th>
                 <th class="t-th">Category</th>
                 <th class="t-th">Owner</th>
-                <th class="t-th">Status</th>  
+                <th class="t-th">Date Received</th>
                 <th class="t-th">Action</th>                
             </tr>
         </thead>
@@ -139,8 +139,8 @@ function loadItemsDataTable(){
                 name: 'generic'
             },
             {
-                data: 'status',
-                name: 'status'
+                data: 'created_at',
+                name: 'created_at'
             },
             {
                 data: 'action',

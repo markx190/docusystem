@@ -80,19 +80,6 @@
                 <span class="text-danger">@error('description') {{ $message }} @enderror</span>
             </div>
         </div>
-        <div class="col-md-3">
-            <label><b>Status</b></label>
-                <select class="form-control" name="status">
-                    <option value="{{ old('status') }}">{{ old('status') }}</option>
-                    <option value="New">New</option>
-                    <option value="For Release">For Release</option>
-                    <option value="For Verification">For Verification</option>
-                    <option value="Pending">Pending</option>
-                    <option value="For Approval">For Approval</option>
-                    <option value="Declined">Declined</option>
-                    <option value="Approved">Approved</option>
-                </select>
-        </div>
         <div class="col-md-9">
             <div class="col-md-9">
                 <label><b>Item Image</b></label>
